@@ -12,10 +12,8 @@ This script uses Puppeteer to capture screenshots of a webpage at multiple viewp
 2. Run `npm install` to install dependencies
 
 ## Usage
-1. Open `screenshot-capture.js`
-2. Replace the `url` variable with the website you want to capture
-3. Modify the `viewports` array to include desired screen sizes
-4. Run the script with `npm run capture`
+1. From your terminal, simply run `node screenshot-capture.js {url} {resolution}`
+2. Your screenshot will be automatically saved in the `screenshots` directory. For example, `node screenshot-capture.js namvu.net 1440x900` will save a file called `screenshots\namvu-net-1440x900.png`
 
 ## Features
 - Captures full-page screenshots
