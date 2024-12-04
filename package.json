@@ -1,0 +1,15 @@
+{
+  "name": "webpage-screenshot-capture",
+  "version": "1.0.0",
+  "description": "Capture screenshots of webpages at multiple viewport sizes",
+  "main": "screenshot-capture.js",
+  "scripts": {
+    "capture": "node screenshot-capture.js"
+  },
+  "dependencies": {
+    "puppeteer": "^19.11.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
