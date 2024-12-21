@@ -1,9 +1,9 @@
 version: '3.8'
 services:
   app:
-    build: .
+    image: ghcr.io/vnt87/puppeteeer-capture:sha-1a9e996
     ports:
-      - "3000:3000"
+      - "5432:3000"
     volumes:
       - ./screenshots:/app/screenshots
     environment:
