@@ -69,6 +69,19 @@
         .modal.active {
             display: flex;
         }
+        /* Add animation class */
+        .fade-scale-in {
+            opacity: 0;
+            transform: scale(0.95);
+            animation: fadeScaleIn 0.3s ease forwards;
+        }
+
+        @keyframes fadeScaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
     </style>
     <script>
         tailwind.config = {
@@ -163,28 +176,30 @@
             </div>
         </div>
 
-        <!-- Screenshot History Table -->
-        <div class="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Screenshot History</h2>
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                    <thead class="bg-gray-50 dark:bg-gray-900">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Preview</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Target URL</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Dimensions</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Capture Time</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="screenshotHistory" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                    </tbody>
-                </table>
+        <!-- Modified Screenshot History Table -->
+        <div id="historySection" class="mt-8 hidden">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Screenshot History</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <thead class="bg-gray-50 dark:bg-gray-900">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Preview</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Target URL</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Dimensions</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Capture Time</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="screenshotHistory" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
         <!-- Toast Notification -->
-        <div id="toast" class="fixed bottom-4 right-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 transform transition-transform duration-300 translate-y-full">
+        <div id="toast" class="fixed bottom-4 right-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 transform transition-all duration-300 translate-y-full hidden">
             <p id="toastMessage" class="text-gray-900 dark:text-white"></p>
         </div>
     </div>
@@ -313,7 +328,18 @@
 
         function updateScreenshotHistory() {
             const screenshots = JSON.parse(localStorage.getItem('screenshots') || '[]');
+            const historySection = document.getElementById('historySection');
             const tbody = document.getElementById('screenshotHistory');
+            
+            if (screenshots.length === 0) {
+                historySection.classList.add('hidden');
+                historySection.classList.remove('fade-scale-in');
+                return;
+            }
+
+            historySection.classList.remove('hidden');
+            historySection.classList.add('fade-scale-in');
+            
             tbody.innerHTML = screenshots.map((screenshot, index) => `
                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
                     <td class="px-6 py-4">
@@ -409,7 +435,6 @@
             const toast = document.getElementById('toast');
             const toastMessage = document.getElementById('toastMessage');
             toastMessage.textContent = message;
-            toast.classList.remove('translate-y-full');
             
             // Remove existing background classes
             toast.classList.remove('bg-red-50', 'dark:bg-red-900', 'bg-green-50', 'dark:bg-green-900');
@@ -423,8 +448,20 @@
                 toast.classList.add('dark:bg-green-900');
             }
             
+            // Show the toast
+            toast.classList.remove('hidden');
+            // Use setTimeout to ensure the transition happens
+            setTimeout(() => {
+                toast.classList.remove('translate-y-full');
+            }, 10);
+            
+            // Hide the toast
             setTimeout(() => {
                 toast.classList.add('translate-y-full');
+                // Add hidden class after transition completes
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 300);
             }, 3000);
         }
 
