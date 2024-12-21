@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   app:
     image: ghcr.io/vnt87/puppeteeer-capture:sha-1a9e996
@@ -8,3 +7,4 @@ services:
       - ./screenshots:/app/screenshots
     environment:
       - NODE_ENV=production
+      - PUPPETEER_ARGS=--no-sandbox,--disable-setuid-sandbox

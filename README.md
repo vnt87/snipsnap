@@ -48,4 +48,9 @@ npm server
 You can now find the app at http://localhost:3000
 
 ### Docker
-This section is being updated
+1. Download [docker-compose.yml](https://raw.githubusercontent.com/vnt87/puppeteeer-capture/refs/heads/main/docker-compose.yml)
+2. Get it up and running (use sudo if needed)
+```bash
+docker compose up -d
+```
+3. The tool WebUI is now running on http://localhost:5432
