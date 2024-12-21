@@ -28,3 +28,24 @@ This script uses Puppeteer to capture screenshots of a webpage at multiple viewp
 ## Troubleshooting
 - Ensure you have the latest version of Node.js
 - Check that the target website allows screenshot capture
+
+## Update 12/21/2024: New WebUI!
+![WebUI Screenshot](screenshot.jpg)
+Just hacked together a quick WebUI using Tailwind.
+
+## How to use the WebUI
+
+### Node server
+1. Clone this repo
+2. Run
+```bash
+npm install express
+```
+3. Serve
+```bash
+npm server
+```
+You can now find the app at http://localhost:3000
+
+### Docker
+This section is being updated
