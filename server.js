@@ -40,15 +40,27 @@ app.listen(PORT, () => {
 async function captureScreenshot(targetUrl, viewportSize) {
     const [width, height] = viewportSize.split('x').map(Number);
     const screenshotDir = path.join(__dirname, 'screenshots');
-    
+    let browser = null;
+
     if (!fs.existsSync(screenshotDir)) {
         fs.mkdirSync(screenshotDir);
     }
 
     const url = targetUrl.startsWith('http') ? targetUrl : `https://${targetUrl}`;
-    const browser = await puppeteer.launch({ headless: "new" });
-
+    
     try {
+        browser = await puppeteer.launch({
+            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-gpu',
+                '--headless'
+            ],
+            ignoreHTTPSErrors: true
+        });
+
         const page = await browser.newPage();
         await page.setViewport({ width, height });
         await page.goto(url, { waitUntil: 'networkidle0' });
@@ -56,15 +68,9 @@ async function captureScreenshot(targetUrl, viewportSize) {
         const filename = `${targetUrl.replace(/[^a-zA-Z0-9]/g, '-')}-${width}x${height}.png`;
         const filepath = path.join(screenshotDir, filename);
 
-        await page.screenshot({ 
-            path: filepath,
-            fullPage: false
-        });
-
+        await page.screenshot({ path: filepath, fullPage: false });
         return { filename, filepath };
-    } catch (error) {
-        throw error;
     } finally {
-        await browser.close();
+        if (browser) await browser.close();
     }
 }
