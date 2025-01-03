@@ -4,6 +4,7 @@
   "description": "Capture screenshots of webpages at multiple viewport sizes",
   "main": "screenshot-capture.js",
   "scripts": {
+    "start": "node server.js",
     "capture": "node screenshot-capture.js"
   },
   "dependencies": {

@@ -37,15 +37,15 @@ Just hacked together a quick WebUI using Tailwind.
 
 ### Node server
 1. Clone this repo
-2. Run
+2. Install dependencies
 ```bash
-npm install express
+npm install
 ```
-3. Serve
+3. Start the server
 ```bash
-npm server
+npm start
 ```
-You can now find the app at http://localhost:3000
+4. Access the application at http://localhost:3000
 
 ### Docker
 1. Download [docker-compose.yml](https://raw.githubusercontent.com/vnt87/puppeteeer-capture/refs/heads/main/docker-compose.yml)
