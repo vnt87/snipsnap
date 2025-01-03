@@ -1,6 +1,12 @@
+FROM node:18-slim AS builder
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+
 FROM node:18-slim
 
-# Install dependencies for Puppeteer
+# Install dependencies for Puppeteer and clean up in same layer
 RUN apt-get update && apt-get install -y \
     chromium \
     chromium-common \
@@ -11,35 +17,28 @@ RUN apt-get update && apt-get install -y \
     fonts-symbola \
     fonts-noto-color-emoji \
     --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
 
-# Create a non-root user
+# Create non-root user and required directories
 RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && mkdir -p /home/pptruser/.cache/puppeteer \
     && mkdir -p /home/pptruser/Downloads \
-    && chown -R pptruser:pptruser /home/pptruser
+    && mkdir -p /app
 
-# Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
-
-# Set environment variables for Puppeteer
+# Set environment variables
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
-# Install dependencies
-RUN npm install
-
-# Copy project files
+# Copy only production dependencies from builder
+COPY --from=builder /app/node_modules /app/node_modules
 COPY . .
 
-# Set correct permissions
-RUN chown -R pptruser:pptruser /app
+# Set permissions
+RUN chown -R pptruser:pptruser /home/pptruser /app
 
-# Run everything after as non-privileged user
 USER pptruser
 
-# Command to run your application
 CMD ["node", "server.js"]

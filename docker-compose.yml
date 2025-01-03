@@ -1,6 +1,6 @@
 services:
   app:
-    image: ghcr.io/vnt87/puppeteeer-capture:sha-1a9e996
+    image: ghcr.io/vnt87/puppeteeer-capture:latest
     ports:
       - "5432:3000"
     volumes:
