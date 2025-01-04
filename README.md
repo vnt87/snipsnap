@@ -29,6 +29,20 @@ This script uses Puppeteer to capture screenshots of a webpage at multiple viewp
 - Ensure you have the latest version of Node.js
 - Check that the target website allows screenshot capture
 
+## Roadmap
+
+- [x] CLI Tool
+- [x] Web UI
+- [x] Light/Dark mode support
+- [x] Preset resolutions
+- [x] Docker image
+- [ ] Multi language support
+  - English
+  - Vietnamese
+  - Other languages in the future
+- [ ] Penpot plugin
+- [ ] Figma plugin
+
 ## Update 12/21/2024: New WebUI!
 ![WebUI Screenshot](screenshot.jpg)
 Just hacked together a quick WebUI using Tailwind.
