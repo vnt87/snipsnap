@@ -31,17 +31,28 @@ This script uses Puppeteer to capture screenshots of a webpage at multiple viewp
 
 ## Roadmap
 
-- [x] CLI Tool
-- [x] Web UI
-- [x] Light/Dark mode support
-- [x] Preset resolutions
-- [x] Docker image
-- [ ] Multi language support
+✅ CLI Tool
+
+✅ Web UI
+
+✅ Light/Dark mode support
+
+✅ Preset resolutions
+
+✅ Docker image
+
+✅ Implement lightbox
+
+✅ Implement delete function
+
+☐ Multi language support
   - English
   - Vietnamese
-  - Other languages in the future
-- [ ] Penpot plugin
-- [ ] Figma plugin
+  - Others
+
+☐ Penpot plugin
+
+☐ Figma plugin
 
 ## Update 12/21/2024: New WebUI!
 ![WebUI Screenshot](screenshot.jpg)
