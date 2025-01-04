@@ -77,7 +77,7 @@ npm start
 4. Access the application at http://localhost:3000
 
 ### Docker
-1. Download [docker-compose.yml](https://raw.githubusercontent.com/vnt87/puppeteeer-capture/refs/heads/main/docker-compose.yml)
+1. Download [docker-compose.yml](https://raw.githubusercontent.com/vnt87/snipsnap/refs/heads/main/docker-compose.yml)
 2. Create a `screenshots` directory in the same location as your `docker-compose.yml`:
   ```bash
   mkdir screenshots
@@ -86,6 +86,6 @@ npm start
   ```bash
   sudo docker-compose up -d
   ```
-4. Access the application at http://localhost:3000
+4. Access the application at http://localhost:5432
 
 Your screenshots will be saved in the `screenshots` directory.
