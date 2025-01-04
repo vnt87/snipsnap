@@ -10,6 +10,25 @@ tailwind.config = {
     }
 }
 
+// Add language initialization
+function initializeLanguage() {
+    document.getElementById('languageSelect').value = window.currentLanguage;
+    window.updatePageLanguage();
+}
+
+function updatePageLanguage() {
+    const texts = window.i18n[window.currentLanguage];
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        const keys = key.split('.');
+        let value = texts;
+        for (const k of keys) {
+            value = value[k];
+        }
+        if (value) element.textContent = value;
+    });
+}
+
 // Check for saved dark mode preference on page load
 if (localStorage.getItem('darkMode') === 'true') {
     document.documentElement.classList.remove('light');
@@ -18,6 +37,7 @@ if (localStorage.getItem('darkMode') === 'true') {
 
 // Initialize page
 document.addEventListener('DOMContentLoaded', () => {
+    initializeLanguage();
     // Check dark mode preference
     if (localStorage.getItem('darkMode') === 'true') {
         document.documentElement.classList.remove('light');
@@ -55,7 +75,7 @@ document.getElementById('screenshotForm').addEventListener('submit', async (e) =
 
     // Show loading state
     button.disabled = true;
-    buttonText.textContent = 'Capturing...';
+    buttonText.textContent = window.i18n[window.currentLanguage].form.capturing;
     loader.classList.remove('hidden');
 
     try {
@@ -86,7 +106,7 @@ document.getElementById('screenshotForm').addEventListener('submit', async (e) =
             
             // Update the history table immediately
             updateScreenshotHistory();
-            showToast(`Screenshot captured successfully!`);
+            showToast(window.i18n[window.currentLanguage].messages.success);
         } else {
             throw new Error(result.error || 'Failed to capture screenshot');
         }
@@ -101,7 +121,7 @@ document.getElementById('screenshotForm').addEventListener('submit', async (e) =
     } finally {
         // Reset button state
         button.disabled = false;
-        buttonText.textContent = 'Capture Screenshot';
+        buttonText.textContent = window.i18n[window.currentLanguage].form.capture;
         loader.classList.add('hidden');
     }
 });
@@ -267,7 +287,7 @@ document.getElementById('confirmDelete').addEventListener('click', () => {
         const updatedScreenshots = screenshots.filter(s => s.timestamp !== screenshotToDelete);
         localStorage.setItem('screenshots', JSON.stringify(updatedScreenshots));
         updateScreenshotHistory();
-        showToast('Screenshot deleted');
+        showToast(window.i18n[window.currentLanguage].messages.deleted);
     }
     document.getElementById('deleteModal').classList.remove('active');
     screenshotToDelete = null;
@@ -306,6 +326,13 @@ function setResolution(width, height) {
     document.getElementById('width').value = width;
     document.getElementById('height').value = height;
 }
+
+// Add language change handler
+document.getElementById('languageSelect').addEventListener('change', (e) => {
+    window.currentLanguage = e.target.value;
+    localStorage.setItem('language', window.currentLanguage);
+    window.updatePageLanguage();
+});
 
 // Update lucide icons when the page loads
 document.addEventListener('DOMContentLoaded', () => {

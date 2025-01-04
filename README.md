@@ -1,4 +1,8 @@
-# Webpage Screenshot Capture
+# SnipSnap - Webpage Screenshot Capture
+
+<p align="center">
+  <img src="office_meme.gif" alt="SnipSnap meme">
+</p>
 
 ## Overview
 This script uses Puppeteer to capture screenshots of a webpage at multiple viewport sizes, useful for responsive design testing.
@@ -45,17 +49,17 @@ This script uses Puppeteer to capture screenshots of a webpage at multiple viewp
 
 ✅ Implement delete function
 
-☐ Multi language support
+✅ Multi language support
   - English
   - Vietnamese
-  - Others
+  - Other (post a request in the [Issues tab](https://github.com/vnt87/puppeteeer-capture/issues) if you want your language implemented)
 
 ☐ Penpot plugin
 
 ☐ Figma plugin
 
 ## Update 12/21/2024: New WebUI!
-![WebUI Screenshot](screenshot.jpg)
+![WebUI Screenshot](screenshot.png)
 Just hacked together a quick WebUI using Tailwind.
 
 ## How to use the WebUI
@@ -74,4 +78,14 @@ npm start
 
 ### Docker
 1. Download [docker-compose.yml](https://raw.githubusercontent.com/vnt87/puppeteeer-capture/refs/heads/main/docker-compose.yml)
-2. Create a `screenshots` directory in the same location as your docker-compose.yml:
+2. Create a `screenshots` directory in the same location as your `docker-compose.yml`:
+  ```bash
+  mkdir screenshots
+  ```
+3. Run the following command to start the Docker container:
+  ```bash
+  sudo docker-compose up -d
+  ```
+4. Access the application at http://localhost:3000
+
+Your screenshots will be saved in the `screenshots` directory.
