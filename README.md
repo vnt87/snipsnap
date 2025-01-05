@@ -86,6 +86,6 @@ npm start
   ```bash
   sudo docker-compose up -d
   ```
-4. Access the application at http://localhost:5432
+4. Access the application at http://localhost:7654
 
 Your screenshots will be saved in the `screenshots` directory.

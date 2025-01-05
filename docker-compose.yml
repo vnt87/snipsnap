@@ -2,7 +2,7 @@ services:
   app:
     image: ghcr.io/vnt87/puppeteeer-capture:latest
     ports:
-      - "5432:3000"
+      - "7654:3000"
     volumes:
       - ./screenshots:/app/screenshots
     security_opt:
